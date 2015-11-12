@@ -53,12 +53,16 @@ module.exports = function (grunt) {
                     './public/css/app.min.css': [
                     /** LESS **/
                         './libs/less/compiled/app.css',
+                    /** BOOTSWATCH **/
+                        './libs/less/compiled/bootstrap.min.css',
                     /** Font Awesome **/
-                        './bower_components/fontawesome/css/font-awesome.css',
+                        './bower_components/fontawesome/css/font-awesome.css'
                     ],
                     './public/css/connexion.min.css': [
                     /** LESS **/
                         './libs/less/compiled/connexion.css',
+                    /** BOOTSWATCH **/
+                        './libs/less/compiled/bootstrap.min.css',
                     /** Font Awesome **/
                         './bower_components/fontawesome/css/font-awesome.css'
                     ]
