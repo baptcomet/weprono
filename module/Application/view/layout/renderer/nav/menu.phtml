@@ -17,7 +17,7 @@ $home = $nav->findOneBy('id', 'home');
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?php echo $home->getHref() ?>"><?php echo APPLICATION_NAME ?></a>
+            <a href="<?php echo $home->getHref() ?>"><img src="<?php echo $this->basePath('/img/logo-wp.png') ?>" height="60px" alt="We Prono"/></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left">

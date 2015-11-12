@@ -19,9 +19,9 @@ class IndexController extends AbstractController
 {
     public function indexAction()
     {
-        if (is_null($this->identity())) {
-            return $this->redirect()->toRoute('accueil', array('action' => 'connexion'));
-        }
+//        if (is_null($this->identity())) {
+//            return $this->redirect()->toRoute('accueil', array('action' => 'connexion'));
+//        }
         $view = new ViewModel();
         return $view;
     }

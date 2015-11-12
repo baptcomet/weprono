@@ -51,18 +51,18 @@ module.exports = function (grunt) {
             target: {
                 files: {
                     './public/css/app.min.css': [
-                    /** LESS **/
-                        './libs/less/compiled/app.css',
                     /** BOOTSWATCH **/
                         './libs/less/compiled/bootstrap.min.css',
+                    /** LESS **/
+                        './libs/less/compiled/app.css',
                     /** Font Awesome **/
                         './bower_components/fontawesome/css/font-awesome.css'
                     ],
                     './public/css/connexion.min.css': [
-                    /** LESS **/
-                        './libs/less/compiled/connexion.css',
                     /** BOOTSWATCH **/
                         './libs/less/compiled/bootstrap.min.css',
+                    /** LESS **/
+                        './libs/less/compiled/connexion.css',
                     /** Font Awesome **/
                         './bower_components/fontawesome/css/font-awesome.css'
                     ]

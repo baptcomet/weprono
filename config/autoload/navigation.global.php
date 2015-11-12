@@ -11,7 +11,7 @@ return array(
                 // Utilisé dans le menu sur le nom de l'app
                 'id' => 'home',
                 'label' => 'Accueil',
-                'title' => 'Accueil',
+                'title' => 'Pronostics entre amis sur la NBA',
                 'route' => 'accueil',
                 'controller' => 'Application\Controller\Index',
                 'action' => 'index',

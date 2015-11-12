@@ -6,6 +6,9 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: @navbar-height + @navbar-padding-vertical;
+  background-image: url("../img/basketball-court.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 
 nav.navbar {
@@ -35,6 +38,12 @@ nav.navbar {
 // HEADER
 .page-header {
   margin: (@line-height-computed - @navbar-padding-vertical) 0 @line-height-computed;
+}
+
+// PAGE CONTENT
+.page-content {
+  background-color: rgba(0, 0, 0, 0.7);
+  min-height: 85vh;
 }
 
 // FOOTER
