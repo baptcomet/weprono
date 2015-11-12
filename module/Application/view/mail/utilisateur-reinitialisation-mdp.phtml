@@ -1,0 +1,11 @@
+<?php
+/**
+ * @var User $user
+ */
+
+use Application\Entity\User;
+
+?>
+<h1>Bonjour <?php echo $user->getPrenom() ?>,</h1>
+<p>Vous venez de faire une demande de réinitialisation de mot de passe.
+    <a href="<?php echo $this->url('password-recovery', array('token' => $user->getToken()), array('force_canonical' => true,)) ?>">Cliquez ici</a> si vous avez effectué cette demande, sinon ignorez cet-email.</p>

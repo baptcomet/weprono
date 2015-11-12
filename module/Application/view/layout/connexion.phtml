@@ -1,0 +1,39 @@
+<?php echo $this->doctype() ?>
+
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle(APPLICATION_NAME)->setSeparator(' - ')->setAutoEscape(false) ?>
+    <?php echo $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
+    <?php echo $this->headLink(
+            array(
+                'rel' => 'shortcut icon',
+                'type' => 'image/vnd.microsoft.icon',
+                'href' => $this->basePath() . '/img/favicon.ico'
+            )
+        )
+        ->prependStylesheet($this->basePath('css/connexion.min.css')) ?>
+    <?php echo $this->headScript()
+        ->prependFile($this->basePath('js/connexion.min.js'))
+        ->prependFile($this->basePath('js/ie.min.js'), 'text/javascript', array('conditional' => 'lt IE 9')) ?>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="signin">
+        <div class="row">
+            <div class="logo">
+                <a href="<?php echo $this->url('accueil', array('action' => 'connexion')) ?>">
+                    <img src="<?php echo $this->basePath('/img/logo-weprono.png') ?>"
+                         alt="We Prono"/>
+                </a>
+            </div>
+            <div class="col-md-12"><?php echo $this->content ?></div>
+        </div>
+    </div>
+    <?php echo $this->inlineScript() ?>
+</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<?php
+/**
+ * @var FlashMessenger $flash
+ */
+
+use Zend\Mvc\Controller\Plugin\FlashMessenger as PluginFlashMessenger;
+use Zend\View\Helper\FlashMessenger;
+
+$flash = $this->flashMessenger();
+$flash->setMessageOpenFormat(
+    '<div%s><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'
+);
+$flash->setMessageSeparatorString('<br/>');
+$flash->setMessageCloseString('</div>');
+
+echo $flash->setAutoEscape(false)
+    ->render(PluginFlashMessenger::NAMESPACE_ERROR, array('alert', 'alert-dismissable', 'alert-danger'));
+echo $flash->setAutoEscape(false)
+    ->render(PluginFlashMessenger::NAMESPACE_INFO, array('alert', 'alert-dismissable', 'alert-info'));
+echo $flash->setAutoEscape(false)
+    ->render(PluginFlashMessenger::NAMESPACE_WARNING, array('alert', 'alert-dismissable', 'alert-warning'));
+echo $flash->setAutoEscape(false)
+    ->render(PluginFlashMessenger::NAMESPACE_SUCCESS, array('alert', 'alert-dismissable', 'alert-success'));
+echo $flash->setAutoEscape(false)
+    ->render(PluginFlashMessenger::NAMESPACE_DEFAULT, array('alert', 'alert-dismissable', 'alert-default'));
+
+echo $flash->setAutoEscape(false)
+    ->renderCurrent(PluginFlashMessenger::NAMESPACE_ERROR, array('alert', 'alert-dismissable', 'alert-danger'));
+echo $flash->setAutoEscape(false)
+    ->renderCurrent(PluginFlashMessenger::NAMESPACE_INFO, array('alert', 'alert-dismissable', 'alert-info'));
+echo $flash->setAutoEscape(false)
+    ->renderCurrent(PluginFlashMessenger::NAMESPACE_WARNING, array('alert', 'alert-dismissable', 'alert-warning'));
+echo $flash->setAutoEscape(false)
+    ->renderCurrent(PluginFlashMessenger::NAMESPACE_SUCCESS, array('alert', 'alert-dismissable', 'alert-success'));
+echo $flash->setAutoEscape(false)
+    ->renderCurrent(PluginFlashMessenger::NAMESPACE_DEFAULT, array('alert', 'alert-dismissable', 'alert-default'));
+
+
+$this->flashMessenger()->getPluginFlashMessenger()->clearCurrentMessagesFromContainer();

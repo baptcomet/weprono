@@ -1,0 +1,20 @@
+<?php
+/**
+ * @var Zend\Navigation\Page\Mvc $page
+ * @var Zend\Navigation\Page\Mvc $subPage
+ *
+ * @var int $id
+ */
+?>
+<ul class="list-unstyled list-inline pull-right">
+    <?php foreach ($this->container as $page) : ?>
+        <?php if ($page->isVisible() && $this->layout()->acl->isAllowed($page->getController(), $page->getAction())) : ?>
+            <li>
+                <a href="<?php echo $page->getHref() ?>" class="<?php echo $page->getClass() ?>" title="<?php echo $page->getTitle() ?>">
+                    <?php echo $page->get('icon') ?>
+                    <?php echo $page->getLabel() ?>
+                </a>
+            </li>
+        <?php endif ?>
+    <?php endforeach ?>
+</ul>

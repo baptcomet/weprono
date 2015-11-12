@@ -1,0 +1,9 @@
+{
+  "name": "baptcomet/We-Prono",
+  "description": "We-Prono",
+  "require": {
+    "php": ">=5.4",
+    "zendframework/zendframework": "2.4.*",
+    "doctrine/doctrine-orm-module": "0.*"
+  }
+}

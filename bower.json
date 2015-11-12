@@ -1,0 +1,11 @@
+{
+  "name": "We-Prono",
+  "version": "0.1",
+  "dependencies": {
+    "jquery": "~1",
+    "html5shiv": "~3.7.2",
+    "respond-minmax": "~1.4.2",
+    "bootstrap": "~3.3.2",
+    "fontawesome": "~4.3.0"
+  }
+}

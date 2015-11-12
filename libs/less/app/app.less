@@ -1,0 +1,54 @@
+/*
+ * Base structure
+ */
+
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: @navbar-height + @navbar-padding-vertical;
+}
+
+nav.navbar {
+  ul.navbar-left {
+    /* Mobile Version */
+    @media (max-width: @grid-float-breakpoint) {
+      border-bottom: 1px solid @navbar-default-border;
+    }
+  }
+
+  /*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+  .navbar-fixed-top {
+    border: 0;
+  }
+}
+
+.fa-stack-regular {
+  width: 1em !important;
+  height: 1em !important;
+  line-height: 1em !important;
+  vertical-align: initial !important;
+}
+
+// HEADER
+.page-header {
+  margin: (@line-height-computed - @navbar-padding-vertical) 0 @line-height-computed;
+}
+
+// FOOTER
+footer {
+  margin-bottom: @line-height-computed;
+  padding: @line-height-computed 0;
+}
+
+// Modification du dropdown dans la navigation
+.nav .dropdown {
+  .dropdown-menu > .active > a,
+  .dropdown-menu > .active > a:focus,
+  .dropdown-menu > .active > a:hover {
+    color: @navbar-default-dropdown-active-color;
+    background-color: @navbar-default-link-active-bg;
+  }
+}

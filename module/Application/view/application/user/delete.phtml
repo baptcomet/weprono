@@ -1,0 +1,21 @@
+<?php
+/**
+ * @var int $id
+ * @var Application\Entity\User $user
+ * @var Application\Form\ValidationForm $form
+ */
+
+echo $this->partial('partial/header', array('id' => $id, 'user' => $user));
+$form->prepare();
+?>
+
+<p>Êtes-vous sûr de vouloir supprimer l'utilisateur <b><?php echo $user->getPrenom() . ' ' . $user->getNom() ?></b> ?</p>
+
+<div>
+    <?php echo $this->form()->openTag($form); ?>
+    <ul class="list-inline">
+        <li><?php echo $this->btFormRow($form->get('no')) ?></li>
+        <li><?php echo $this->btFormRow($form->get('yes')) ?></li>
+    </ul>
+    <?php echo $this->form()->closeTag(); ?>
+</div>

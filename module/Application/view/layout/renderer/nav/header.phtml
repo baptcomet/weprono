@@ -1,0 +1,42 @@
+<?php
+/**
+ * @var Zend\Navigation\Page\Mvc $page
+ * @var Zend\Navigation\Page\Mvc $subPage
+ *
+ * @var int $id
+ */
+?>
+<ul class="nav nav-pills pull-right">
+    <?php foreach ($this->container as $page) : ?>
+        <?php if ($page->isVisible() && $this->layout()->acl->isAllowed($page->getController(), $page->getAction())) : ?>
+            <?php if ($page->getPages()) : ?>
+                <li class="dropdown<?php echo $page->isActive(true) ? ' active' : null ?>">
+                    <a id="menu-<?php echo $page->getId() ?>" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="<?php echo $page->getTitle() ?>">
+                        <?php echo $page->get('icon') ?>
+                        <span <?php echo (!is_null($page->get('label-class'))) ? 'class="' . $page->get('label-class') . '"' : null ?>><?php echo $this->escapeHtml($page->getLabel()) ?></span>&nbsp;<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <?php foreach ($page as $subPage) : ?>
+                            <?php if ($subPage->isVisible() && $this->layout()->acl->isAllowed($subPage->getController(), $subPage->getAction())) : ?>
+                                <li<?php echo $subPage->isActive(true) ? ' class="active"' : null ?>>
+                                    <a id="menu-<?php echo $page->getId() ?>-<?php echo $subPage->getId() ?>" href="<?php echo $subPage->getHref() ?>" title="<?php echo $page->getTitle() ?>">
+                                        <?php echo $subPage->get('icon') ?>
+                                        <span <?php echo (!is_null($subPage->get('label-class'))) ? 'class="' . $subPage->get('label-class') . '"' : null ?>><?php echo $this->escapeHtml($subPage->getLabel()) ?></span>
+                                    </a>
+                                </li>
+                            <?php endif ?>
+
+                        <?php endforeach ?>
+                    </ul>
+                </li>
+            <?php else : ?>
+                <li<?php echo $page->isActive(true) ? ' class="active"' : null ?>>
+                    <a id="menu-<?php echo $page->getId() ?>" href="<?php echo $page->getHref() ?>" title="<?php echo $page->getTitle() ?>">
+                        <?php echo $page->get('icon') ?>
+                        <span <?php echo (!is_null($page->get('label-class'))) ? 'class="' . $page->get('label-class') . '"' : null ?>><?php echo $this->escapeHtml($page->getLabel()) ?></span>
+                    </a>
+                </li>
+            <?php endif ?>
+        <?php endif ?>
+    <?php endforeach ?>
+</ul>

@@ -1,0 +1,20 @@
+<?php
+/** @var Zend\Navigation\Page\Mvc $nav */
+$nav = $this->navigation('Zend\Navigation\Connexion');
+
+$title = $nav->findOneBy('active', 1)->getTitle();
+$this->headTitle($title);
+?>
+
+<div class="row">
+    <div class="banner col-md-12">
+        <h1><?php echo APPLICATION_NAME ?></h1>
+        <h2><?php echo $title ?></h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-offset-3 col-md-6">
+        <?php echo $this->partial('/layout/partial/flashmessenger') ?>
+    </div>
+</div>

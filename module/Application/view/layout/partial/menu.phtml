@@ -1,0 +1,7 @@
+<div class="row">
+    <?php
+    /** @var Zend\View\Helper\Navigation\Menu $menu */
+    $menu = $this->navigation('Zend\Navigation\Default')->menu()->setPartial('/layout/renderer/nav/menu');
+    echo $menu->render();
+    ?>
+</div>

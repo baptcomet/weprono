@@ -1,0 +1,56 @@
+<?php
+/**
+ * @var Application\Form\UserForm $form
+ */
+
+echo $this->partial('partial/header-list');
+
+$form->prepare();
+?>
+
+<?php echo $this->form()->openTag($form) ?>
+
+<div class="col-md-6">
+    <div class="panel panel-<?php echo $form->hasIdentificationError() ? 'danger' : 'default' ?>">
+        <div class="panel-heading">
+            <h3 id="identification" class="panel-title"><i class="fa fa-user fa-fw"></i>&nbsp; Identification</h3>
+        </div>
+        <div class="panel-body">
+            <?php echo $this->btFormRow($form->get('prenom')) ?>
+            <?php echo $this->btFormRow($form->get('nom')) ?>
+            <?php echo $this->btFormRow($form->get('email')) ?>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="panel panel-<?php echo $form->hasPasswordError() ? 'danger' : 'default' ?>">
+        <div class="panel-heading">
+            <h3 id="password" class="panel-title"><i class="fa fa-key fa-fw"></i>&nbsp; Mot de Passe</h3>
+        </div>
+        <div class="panel-body">
+            <?php echo $this->btFormRow($form->get('password')) ?>
+            <?php echo $this->btFormRow($form->get('passwordConfirmation')) ?>
+        </div>
+    </div>
+
+    <div class="panel panel-<?php echo array_key_exists('role', $form->getMessages()) ? 'danger' : 'default' ?>">
+        <div class="panel-heading">
+            <h3 id="role" class="panel-title"><i class="fa fa-gear fa-fw"></i>&nbsp; Rôle</h3>
+        </div>
+        <div class="panel-body">
+            <?php echo $this->btFormRow($form->get('role')) ?>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="form-group">
+        <?php echo $this->formHidden($form->get('id')) ?>
+        <ul class="list-inline text-right">
+            <li><?php echo $this->formSubmit($form->get('submit')) ?></li>
+        </ul>
+    </div>
+</div>
+
+<?php echo $this->form()->closeTag() ?>
