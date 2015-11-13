@@ -19,13 +19,7 @@ class AuthForm extends AbstractForm
 
         // Email
         $email = new Email('email');
-        $email->setLabel('Adresse email')
-            ->setLabelAttributes(
-                array(
-                    'class' => 'control-label'
-                )
-            )
-            ->setAttributes(
+        $email->setAttributes(
                 array(
                     'id' => 'email',
                     'class' => 'form-control',
@@ -38,13 +32,7 @@ class AuthForm extends AbstractForm
 
         // Password
         $password = new Password('encryptedPassword');
-        $password->setLabel('Mot de passe')
-            ->setLabelAttributes(
-                array(
-                    'class' => 'control-label',
-                )
-            )
-            ->setAttributes(
+        $password->setAttributes(
                 array(
                     'id' => 'encryptedPassword',
                     'class' => 'form-control',
@@ -59,7 +47,7 @@ class AuthForm extends AbstractForm
         $submit->setValue('Connexion');
         $submit->setAttributes(
             array(
-                'class' => 'btn btn-lg btn-primary btn-block'
+                'class' => 'btn btn-primary btn-block'
             )
         );
         $this->add($submit);

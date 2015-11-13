@@ -5,6 +5,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\Connexion' => 'Application\Controller\ConnexionController',
             'Application\Controller\User' => 'Application\Controller\UserController',
         ),
     ),
@@ -40,6 +41,17 @@ return array(
                     'defaults' => array(
                         'module' => 'Application',
                         'controller' => 'Application\Controller\Index',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'connexion' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/connexion[/:action][/]',
+                    'defaults' => array(
+                        'module' => 'Application',
+                        'controller' => 'Application\Controller\Connexion',
                         'action' => 'index',
                     ),
                 ),

@@ -1,0 +1,33 @@
+<?php
+/**
+ * @var Application\Form\AuthForm $form
+ */
+
+$this->headTitle('Connexion');
+$form->prepare();
+?>
+
+<div class="row">
+    <div class="banner col-md-12">
+        <h2>Connectez-vous&nbsp;-&nbsp;ou&nbsp;<a href="<?php echo $this->url('connexion', array('action' => 'inscription')) ?>">inscrivez-vous</a></h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2 col-md-offset-5">
+        <div class="form-signin">
+            <?php echo $this->form()->openTag($form) ?>
+
+            <div class="form-group">
+                <?php echo $this->formText($form->get('email')) ?>
+            </div>
+            <div class="form-group">
+                <?php echo $this->formPassword($form->get('encryptedPassword')) ?>
+                <a href="<?php echo $this->url('connexion', array('action' => 'mdp-oublie')) ?>" class="btn btn-link pull-right">Mot de Passe Oublié ?</a>
+            </div>
+            <?php echo $this->formRow($form->get('submit')) ?>
+
+            <?php echo $this->form()->closeTag() ?>
+        </div>
+    </div>
+</div>

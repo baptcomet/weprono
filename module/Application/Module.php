@@ -70,22 +70,6 @@ class Module
         );
     }
 
-    public function getViewHelperConfig()
-    {
-        return array(
-            'factories' => array(
-                'btFormRow' => function () {
-                    $helper = new View\Helper\FormRowHelper();
-                    return $helper;
-                },
-                'btFormInline' => function () {
-                    $helper = new View\Helper\FormInlineHelper();
-                    return $helper;
-                },
-            ),
-        );
-    }
-
     /**
      * @param MvcEvent $e
      */

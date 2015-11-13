@@ -1,0 +1,34 @@
+<?php
+/**
+ * @var Application\Form\AuthForgottenPasswordForm $form
+ */
+
+$this->headTitle('Mot de passe oublié');
+$form->prepare();
+?>
+
+<div class="row">
+    <div class="banner col-md-12">
+        <h2>Mot de passe oublié ?</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2 col-md-offset-5">
+        <div class="form-signin">
+            <?php echo $this->form()->openTag($form) ?>
+
+            <div class="form-group">
+                <?php echo $this->formText($form->get('email')) ?>
+            </div>
+            <?php echo $this->formRow($form->get('submit')) ?>
+
+            <?php echo $this->form()->closeTag() ?>
+        </div>
+
+        <hr/>
+
+        <a href="<?php echo $this->url('connexion') ?>">Retour à la connexion</a>
+    </div>
+</div>
+

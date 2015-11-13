@@ -1,0 +1,44 @@
+<?php
+/**
+ * @var Application\Form\UserForm $form
+ */
+
+$this->headTitle('Inscription');
+$form->prepare();
+?>
+
+<div class="row">
+    <div class="banner col-md-12">
+        <h2>Inscrivez-vous&nbsp;-&nbsp;ou&nbsp;<a href="<?php echo $this->url('connexion') ?>">connectez-vous</a></h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2 col-md-offset-5">
+        <div class="form-signin">
+            <?php echo $this->form()->openTag($form) ?>
+
+            <div class="form-group">
+                <?php echo $this->formText($form->get('prenom')) ?>
+            </div>
+            <div class="form-group">
+                <?php echo $this->formText($form->get('nom')) ?>
+            </div>
+            <div class="form-group">
+                <?php echo $this->formText($form->get('email')) ?>
+            </div>
+            <div class="form-group">
+                <?php echo $this->formText($form->get('password')) ?>
+            </div>
+            <div class="form-group">
+                <?php echo $this->formText($form->get('passwordConfirmation')) ?>
+            </div>
+            <div class="form-group">
+                <br/>
+                <?php echo $this->formRow($form->get('submit')) ?>
+            </div>
+
+            <?php echo $this->form()->closeTag() ?>
+        </div>
+    </div>
+</div>

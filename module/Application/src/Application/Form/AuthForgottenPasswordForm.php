@@ -18,13 +18,7 @@ class AuthForgottenPasswordForm extends AbstractForm
 
         // Email
         $email = new Email('email');
-        $email->setLabel('Adresse email')
-            ->setLabelAttributes(
-                array(
-                    'class' => 'control-label'
-                )
-            )
-            ->setAttributes(
+        $email->setAttributes(
                 array(
                     'id' => 'email',
                     'class' => 'form-control',
@@ -40,7 +34,7 @@ class AuthForgottenPasswordForm extends AbstractForm
         $submit->setValue('Valider');
         $submit->setAttributes(
             array(
-                'class' => 'btn btn-lg btn-primary btn-block'
+                'class' => 'btn btn-primary btn-block'
             )
         );
         $this->add($submit);
