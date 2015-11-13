@@ -2,11 +2,10 @@
 
 namespace Application\Controller;
 
-use Application\Entity\Repository\UserRepository;
-use Application\Entity\User;
+use Application\Entity\Repository\UtilisateurRepository;
+use Application\Entity\Utilisateur;
 use Application\Form\DeleteForm;
-use Application\Form\UserForm;
-use Application\Form\ValidationForm;
+use Application\Form\UtilisateurForm;
 use Application\Util\Mailer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
@@ -15,28 +14,28 @@ use Zend\Http\Request;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class UserController extends AbstractActionController
+class UtilisateurController extends AbstractActionController
 {
-    public function listAction()
+    public function indexAction()
     {
-        /** @var User $user */
-        $user = $this->identity();
+        /** @var Utilisateur $utilisateur */
+        $utilisateur = $this->identity();
 
         /** @var EntityManager $em */
         $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        /** @var UserRepository $userRepo */
-        $userRepo = $em->getRepository('Application\Entity\User');
+        /** @var UtilisateurRepository $utilisateurRepo */
+        $utilisateurRepo = $em->getRepository('Application\Entity\Utilisateur');
         /** @var ArrayCollection $users */
 
-        if ($user->getRole() == User::ROLE_ADMINISTRATEUR) {
-            $users = $userRepo->findAll();
+        if ($utilisateur->getRole() == Utilisateur::ROLE_ADMINISTRATEUR) {
+            $utilisateurs = $utilisateurRepo->findAll();
         } else {
-            $users = $userRepo->findEnabled();
+            $utilisateurs = $utilisateurRepo->findEnabled();
         }
         $view = new ViewModel();
         return $view->setVariables(
             array(
-                'users' => $users,
+                'utilisateurs' => $utilisateurs,
             )
         );
     }
@@ -47,12 +46,12 @@ class UserController extends AbstractActionController
 
         $id = $routeId == 0 ? $this->identity()->getId() : $routeId;
 
-        /** @var User $user */
-        $user = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager')
-            ->getRepository('Application\Entity\User')
+        /** @var Utilisateur $utilisateur */
+        $utilisateur = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager')
+            ->getRepository('Application\Entity\Utilisateur')
             ->find($id);
 
-        if (is_null($user)) {
+        if (is_null($utilisateur)) {
             $this->flashMessenger()
                 ->addErrorMessage('L\'utilisateur n\'existe pas.');
             return $this->redirect()->toRoute('accueil');
@@ -61,36 +60,36 @@ class UserController extends AbstractActionController
         $view = new ViewModel();
         return $view->setVariables(
             array(
-                'user' => $user,
+                'utilisateur' => $utilisateur,
                 'id' => $routeId,
             )
         );
     }
 
-    public function addAction()
+    public function creerAction()
     {
         /** @var EntityManager $em */
         $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
 
-        $form = new UserForm($em, UserForm::TYPE_ADD);
-        $user = new User();
+        $form = new UtilisateurForm($em, UtilisateurForm::TYPE_ADD);
+        $utilisateur = new Utilisateur();
 
-        $form->bind($user);
-        $user->setRole(User::DEFAULT_ROLE);
+        $form->bind($utilisateur);
+        $utilisateur->setRole(Utilisateur::DEFAULT_ROLE);
 
         /** @var Request $request */
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
             if ($form->isValid()) {
-                $user->setEncryptedPassword(
-                    Hash::compute('sha256', $user->getPassword())
+                $utilisateur->setEncryptedPassword(
+                    Hash::compute('sha256', $utilisateur->getPassword())
                 );
-                $user->setDisabled(false);
+                $utilisateur->setDisabled(false);
                 // TODO : Garder les rôles ?
-                $user->setRole($user::ROLE_ADMINISTRATEUR);
+                $utilisateur->setRole($utilisateur::ROLE_ADMINISTRATEUR);
 
-                $em->persist($user);
+                $em->persist($utilisateur);
                 $em->flush();
 
                 $this->flashMessenger()
@@ -103,14 +102,14 @@ class UserController extends AbstractActionController
                 $viewMessage->setTemplate('mail/utilisateur-nouveau')
                     ->setVariables(
                         array(
-                            'user' => $user,
+                            'user' => $utilisateur,
                         )
                     )->setTerminal(true);
 
                 $viewRender = $this->getServiceLocator()->get('ViewRenderer');
                 $message = $viewRender->render($viewMessage);
 
-                $to = $user->getEmail();
+                $to = $utilisateur->getEmail();
 
                 $mailer = new Mailer($this->getServiceLocator());
                 $mailer->sendMail($subject, $message, $to);
@@ -127,14 +126,14 @@ class UserController extends AbstractActionController
         );
     }
 
-    public function editAction()
+    public function modifierAction()
     {
         $routeId = (int)$this->params()->fromRoute('id');
         $id = $routeId == 0 ? $this->identity()->getId() : $routeId;
 
-        /** @var User $user */
-        $user = $this->identity();
-        if ($user->getId() != $id && $user->getRole() != User::ROLE_ADMINISTRATEUR) {
+        /** @var Utilisateur $utilisateur */
+        $utilisateur = $this->identity();
+        if ($utilisateur->getId() != $id && $utilisateur->getRole() != Utilisateur::ROLE_ADMINISTRATEUR) {
             $this->flashMessenger()
                 ->addErrorMessage('L\'utilisateur n\'existe pas.');
             return $this->redirect()->toRoute('accueil');
@@ -142,17 +141,17 @@ class UserController extends AbstractActionController
 
         /** @var EntityManager $em */
         $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        /** @var User $user */
-        $user = $em->getRepository('Application\Entity\User')
+        /** @var Utilisateur $utilisateur */
+        $utilisateur = $em->getRepository('Application\Entity\Utilisateur')
             ->find($id);
-        if (is_null($user)) {
+        if (is_null($utilisateur)) {
             $this->flashMessenger()
                 ->addErrorMessage('L\'utilisateur n\'existe pas.');
             return $this->redirect()->toRoute('accueil');
         }
 
-        $form = new UserForm($em);
-        $form->bind($user);
+        $form = new UtilisateurForm($em);
+        $form->bind($utilisateur);
 
         /** @var Request $request */
         $request = $this->getRequest();
@@ -165,8 +164,8 @@ class UserController extends AbstractActionController
             $form->setData($post);
             if ($form->isValid()) {
                 if (!$unchanged) {
-                    $user->setEncryptedPassword(
-                        Hash::compute('sha256', $user->getPassword())
+                    $utilisateur->setEncryptedPassword(
+                        Hash::compute('sha256', $utilisateur->getPassword())
                     );
                 }
 
@@ -181,14 +180,14 @@ class UserController extends AbstractActionController
                 $viewMessage->setTemplate('mail/utilisateur-maj')
                     ->setVariables(
                         array(
-                            'user' => $user,
+                            'user' => $utilisateur,
                         )
                     )->setTerminal(true);
 
                 $viewRender = $this->getServiceLocator()->get('ViewRenderer');
                 $message = $viewRender->render($viewMessage);
 
-                $to = $user->getEmail();
+                $to = $utilisateur->getEmail();
 
                 $mailer = new Mailer($this->getServiceLocator());
                 $mailer->sendMail($subject, $message, $to);
@@ -200,97 +199,25 @@ class UserController extends AbstractActionController
         $view = new ViewModel();
         return $view->setVariables(
             array(
-                'user' => $user,
+                'utilisateur' => $utilisateur,
                 'id' => $routeId,
                 'form' => $form,
             )
         );
     }
 
-    public function disableAction()
+    public function supprimerAction()
     {
         $routeId = (int)$this->params()->fromRoute('id');
         $id = $routeId == 0 ? $this->identity()->getId() : $routeId;
 
         /** @var EntityManager $em */
         $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        /** @var User $user */
-        $user = $em->getRepository('Application\Entity\User')
+        /** @var Utilisateur $utilisateur */
+        $utilisateur = $em->getRepository('Application\Entity\Utilisateur')
             ->find($id);
 
-        if (is_null($user)) {
-            $this->flashMessenger()
-                ->addErrorMessage('L\'utilisateur n\'existe pas.');
-            return $this->redirect()->toRoute('accueil');
-        }
-
-        $form = new ValidationForm();
-
-        /** @var Request $request */
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            if ($request->getPost('yes')) {
-                $user->setDisabled(true);
-                $em->flush();
-
-                $this->flashMessenger()
-                    ->addSuccessMessage('L\'utilisateur a bien été désactivé.');
-                return $this->redirect()->toRoute('utilisateurs');
-            } else {
-                $this->flashMessenger()
-                    ->addWarningMessage('Vous avez annulé la désactivation de l\'utilisateur.');
-                return $this->redirect()->toRoute('utilisateurs');
-            }
-        }
-
-        $view = new ViewModel();
-        return $view->setVariables(
-            array(
-                'user' => $user,
-                'id' => $routeId,
-                'form' => $form,
-            )
-        );
-    }
-
-    public function enableAction()
-    {
-        $routeId = (int)$this->params()->fromRoute('id');
-        $id = $routeId == 0 ? $this->identity()->getId() : $routeId;
-
-        /** @var EntityManager $em */
-        $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        /** @var User $user */
-        $user = $em->getRepository('Application\Entity\User')
-            ->find($id);
-
-        if (is_null($user)) {
-            $this->flashMessenger()
-                ->addErrorMessage('L\'utilisateur n\'existe pas.');
-            return $this->redirect()->toRoute('accueil');
-        }
-
-        $user->setDisabled(false);
-        $em->flush();
-
-        $this->flashMessenger()
-            ->addSuccessMessage('L\'utilisateur a bien été activé.');
-
-        return $this->redirect()->toRoute('utilisateurs');
-    }
-
-    public function deleteAction()
-    {
-        $routeId = (int)$this->params()->fromRoute('id');
-        $id = $routeId == 0 ? $this->identity()->getId() : $routeId;
-
-        /** @var EntityManager $em */
-        $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        /** @var User $user */
-        $user = $em->getRepository('Application\Entity\User')
-            ->find($id);
-
-        if (is_null($user)) {
+        if (is_null($utilisateur)) {
             $this->flashMessenger()
                 ->addErrorMessage('L\'utilisateur n\'existe pas.');
             return $this->redirect()->toRoute('accueil');
@@ -302,7 +229,7 @@ class UserController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             if ($request->getPost('yes')) {
-                $em->remove($user);
+                $em->remove($utilisateur);
                 $em->flush();
                 $this->flashMessenger()
                     ->addSuccessMessage('L\'utilisateur a bien été supprimé.');
@@ -317,7 +244,7 @@ class UserController extends AbstractActionController
         $view = new ViewModel();
         return $view->setVariables(
             array(
-                'user' => $user,
+                'utilisateur' => $utilisateur,
                 'id' => $routeId,
                 'form' => $form,
             )

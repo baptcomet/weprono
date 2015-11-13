@@ -2,8 +2,8 @@
 
 namespace Application\Form;
 
-use Application\Entity\User;
-use Application\Form\Filter\UserFilter;
+use Application\Entity\Utilisateur;
+use Application\Form\Filter\UtilisateurFilter;
 use Doctrine\ORM\EntityManager;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use Zend\Form\Element\Email;
@@ -13,7 +13,7 @@ use Zend\Form\Element\Select;
 use Zend\Form\Element\Submit;
 use Zend\Form\Element\Text;
 
-class UserForm extends AbstractForm
+class UtilisateurForm extends AbstractForm
 {
     const TYPE_ADD = 0;
     const TYPE_EDIT = 1;
@@ -29,7 +29,7 @@ class UserForm extends AbstractForm
             )
         );
 
-        $this->setInputFilter(new UserFilter($objectManager, $type));
+        $this->setInputFilter(new UtilisateurFilter($objectManager, $type));
         $this->setHydrator(new DoctrineObject($objectManager));
 
         // Id
@@ -38,13 +38,7 @@ class UserForm extends AbstractForm
 
         // Prénom
         $firtname = new Text('prenom');
-        $firtname->setLabel('Prénom')
-            ->setLabelAttributes(
-                array(
-                    'class' => 'control-label'
-                )
-            )
-            ->setAttributes(
+        $firtname->setAttributes(
                 array(
                     'id' => 'prenom',
                     'class' => 'form-control',
@@ -57,13 +51,7 @@ class UserForm extends AbstractForm
 
         // Nom
         $lastname = new Text('nom');
-        $lastname->setLabel('Nom')
-            ->setLabelAttributes(
-                array(
-                    'class' => 'control-label'
-                )
-            )
-            ->setAttributes(
+        $lastname->setAttributes(
                 array(
                     'id' => 'nom',
                     'class' => 'form-control',
@@ -76,13 +64,7 @@ class UserForm extends AbstractForm
 
         // Email
         $email = new Email('email');
-        $email->setLabel('Adresse email')
-            ->setLabelAttributes(
-                array(
-                    'class' => 'control-label'
-                )
-            )
-            ->setAttributes(
+        $email->setAttributes(
                 array(
                     'id' => 'email',
                     'class' => 'form-control',
@@ -94,13 +76,7 @@ class UserForm extends AbstractForm
 
         // Password
         $password = new Password('password');
-        $password->setLabel('Mot de passe')
-            ->setLabelAttributes(
-                array(
-                    'class' => 'control-label',
-                )
-            )
-            ->setAttributes(
+        $password->setAttributes(
                 array(
                     'id' => 'password',
                     'class' => 'form-control',
@@ -113,17 +89,11 @@ class UserForm extends AbstractForm
 
         // Password
         $password = new Password('passwordConfirmation');
-        $password->setLabel('Confirmation du mot de passe')
-            ->setLabelAttributes(
-                array(
-                    'class' => 'control-label',
-                )
-            )
-            ->setAttributes(
+        $password->setAttributes(
                 array(
                     'id' => 'passwordConfirmation',
                     'class' => 'form-control',
-                    'placeholder' => 'Mot de passe',
+                    'placeholder' => 'Confirmation du mot de passe',
                     'required' => $type == self::TYPE_ADD,
                     'autocomplete' => false,
                 )
@@ -131,13 +101,7 @@ class UserForm extends AbstractForm
         $this->add($password);
 
         $role = new Select('role');
-        $role->setValueOptions(User::getStaticRoleList())
-            ->setLabel('Sélectionner le rôle de cet utilisateur')
-            ->setLabelAttributes(
-                array(
-                    'class' => 'control-label',
-                )
-            )
+        $role->setValueOptions(Utilisateur::getStaticRoleList())
             ->setAttributes(
                 array(
                     'id' => 'role',

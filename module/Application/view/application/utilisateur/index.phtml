@@ -1,0 +1,53 @@
+<?php
+/**
+ * @var Doctrine\Common\Collections\ArrayCollection $utilisateurs
+ * @var Application\Entity\Utilisateur $utilisateur
+ * @var Zend\Navigation\Page\Mvc $nav
+ */
+
+/** @var \Application\Util\Acl $acl */
+$acl = $this->layout()->acl;
+
+echo $this->partial('partial/header-liste');
+
+$nav = $this->navigation('Zend\Navigation\Utilisateur');
+$items = array('detail', 'modifier', 'supprimer');
+?>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Rôle</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($utilisateurs as $utilisateur) : ?>
+        <tr>
+            <td><?php echo $utilisateur->getPrenom() ?></td>
+            <td><?php echo $utilisateur->getNom() ?></td>
+            <td><?php echo $utilisateur->getEmail() ?></td>
+            <td><?php echo $utilisateur::getStaticRoleList()[$utilisateur->getRole()] ?></td>
+            <td>
+                <ul class="list-inline pull-right">
+                    <?php foreach ($items as $action) :
+                        /** @var Zend\Navigation\Page\Mvc $item */
+                        $item = $nav->findOneBy('id', $action);
+                        if (!$this->layout()->acl->isAllowed($item->getController(), $item->getAction())) {
+                            continue;
+                        }
+                        $item->setParams(array('id' => $utilisateur->getId())) ?>
+                        <li>
+                            <a href="<?php echo $item->getHref() ?>" title="<?php echo $item->getTitle() ?>">
+                                <?php echo $item->get('icon') ?>
+                            </a>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            </td>
+        </tr>
+    <?php endforeach ?>
+    </tbody>
+</table>

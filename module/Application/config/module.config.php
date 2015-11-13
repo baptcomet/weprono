@@ -6,7 +6,7 @@ return array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Connexion' => 'Application\Controller\ConnexionController',
-            'Application\Controller\User' => 'Application\Controller\UserController',
+            'Application\Controller\Utilisateur' => 'Application\Controller\UtilisateurController',
         ),
     ),
 
@@ -26,7 +26,7 @@ return array(
         'authentication' => array(
             'orm_default' => array(
                 'object_manager' => 'Doctrine\ORM\EntityManager',
-                'identity_class' => 'Application\Entity\User',
+                'identity_class' => 'Application\Entity\Utilisateur',
                 'identity_property' => 'email',
                 'credential_property' => 'encryptedPassword',
             ),
@@ -72,13 +72,13 @@ return array(
                 'options' => array(
                     'route' => '/utilisateurs[/:action][/]',
                     'constraints' => array(
-                        'action' => 'list|add',
+                        'action' => 'index|creer',
                         'id' => '[0-9]*',
                     ),
                     'defaults' => array(
                         'module' => 'Application',
-                        'controller' => 'Application\Controller\User',
-                        'action' => 'list',
+                        'controller' => 'Application\Controller\Utilisateur',
+                        'action' => 'index',
                     )
                 )
             ),
@@ -87,12 +87,12 @@ return array(
                 'options' => array(
                     'route' => '/utilisateur[/:action][/:id][/]',
                     'constraints' => array(
-                        'action' => 'edit|detail|delete|disable|enable',
+                        'action' => 'detail|modifier|supprimer',
                         'id' => '[0-9]*',
                     ),
                     'defaults' => array(
                         'module' => 'Application',
-                        'controller' => 'Application\Controller\User',
+                        'controller' => 'Application\Controller\Utilisateur',
                         'action' => 'detail',
                         'id' => 0,
                     )

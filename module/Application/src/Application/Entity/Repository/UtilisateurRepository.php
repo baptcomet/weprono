@@ -3,7 +3,7 @@ namespace Application\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class UserRepository extends EntityRepository
+class UtilisateurRepository extends EntityRepository
 {
     public function findEnabled()
     {
@@ -11,7 +11,7 @@ class UserRepository extends EntityRepository
         $qb = $entityManager->createQueryBuilder();
 
         $qb->select('u')
-            ->from('Application\Entity\User', 'u')
+            ->from('Application\Entity\Utilisateur', 'u')
             ->where('u.disabled = 0');
 
         return $qb->getQuery()->getResult();

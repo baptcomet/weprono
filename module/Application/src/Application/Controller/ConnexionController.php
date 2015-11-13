@@ -1,11 +1,11 @@
 <?php
 namespace Application\Controller;
 
-use Application\Entity\User;
+use Application\Entity\Utilisateur;
 use Application\Form\AuthForgottenPasswordForm;
 use Application\Form\AuthForm;
 use Application\Form\ResetPasswordForm;
-use Application\Form\UserForm;
+use Application\Form\UtilisateurForm;
 use Application\Util\Mailer;
 use Doctrine\ORM\EntityManager;
 use Zend\Authentication\AuthenticationService;
@@ -75,7 +75,7 @@ class ConnexionController extends AbstractController
         $this->flashMessenger()
             ->addSuccessMessage('Vous avez bien été déconnecté(e).');
 
-        return $this->redirect()->toRoute('connexion');
+        return $this->redirect()->toRoute('accueil');
     }
 
     public function inscriptionAction()
@@ -84,24 +84,24 @@ class ConnexionController extends AbstractController
 
         /** @var EntityManager $em */
         $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        $form = new UserForm($em);
-        $user = new User();
+        $form = new UtilisateurForm($em);
+        $utilisateur = new Utilisateur();
 
         $form->get('submit')->setAttribute('class', 'btn btn-primary btn-block')->setValue('Inscription');
-        $form->bind($user);
-        $user->setRole(User::DEFAULT_ROLE);
+        $form->bind($utilisateur);
+        $utilisateur->setRole(Utilisateur::DEFAULT_ROLE);
 
         /** @var Request $request */
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
             if ($form->isValid()) {
-                $user->setEncryptedPassword(
-                    Hash::compute('sha256', $user->getPassword())
+                $utilisateur->setEncryptedPassword(
+                    Hash::compute('sha256', $utilisateur->getPassword())
                 );
-                $user->setDisabled(false);
+                $utilisateur->setDisabled(false);
 
-                $em->persist($user);
+                $em->persist($utilisateur);
                 $em->flush();
 
                 $this->flashMessenger()
@@ -113,14 +113,14 @@ class ConnexionController extends AbstractController
                 $viewMessage->setTemplate('mail/utilisateur-nouveau')
                     ->setVariables(
                         array(
-                            'user' => $user,
+                            'user' => $utilisateur,
                         )
                     )->setTerminal(true);
 
                 $viewRender = $this->getServiceLocator()->get('ViewRenderer');
                 $message = $viewRender->render($viewMessage);
 
-                $to = $user->getEmail();
+                $to = $utilisateur->getEmail();
 
                 $mailer = new Mailer($this->getServiceLocator());
                 $mailer->sendMail($subject, $message, $to);
@@ -150,16 +150,16 @@ class ConnexionController extends AbstractController
             if ($form->isValid()) {
                 /** @var EntityManager $em */
                 $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-                /** @var User $user */
-                $user = $em->getRepository('Application\Entity\User')
+                /** @var Utilisateur $utilisateur */
+                $utilisateur = $em->getRepository('Application\Entity\Utilisateur')
                     ->findOneBy(array('email' => $form->getData()['email']));
-                if (is_null($user)) {
+                if (is_null($utilisateur)) {
                     $this->flashMessenger()
                         ->addErrorMessage('Aucun utilisateur correspondant à cette adresse email n\'a été trouvé.');
                 } else {
-                    $user->setToken(Rand::getString(32, $user::getStaticTokenPattern()));
+                    $utilisateur->setToken(Rand::getString(32, $utilisateur::getStaticTokenPattern()));
 
-                    $em->persist($user);
+                    $em->persist($utilisateur);
                     $em->flush();
 
                     $subject = 'Demande de réinitialisation de votre mot de passe';
@@ -168,14 +168,14 @@ class ConnexionController extends AbstractController
                     $viewMessage->setTemplate('mail/utilisateur-reinitialisation-mdp')
                         ->setVariables(
                             array(
-                                'user' => $user,
+                                'user' => $utilisateur,
                             )
                         )->setTerminal(true);
 
                     $viewRender = $this->getServiceLocator()->get('ViewRenderer');
                     $message = $viewRender->render($viewMessage);
 
-                    $to = $user->getEmail();
+                    $to = $utilisateur->getEmail();
 
                     $mailer = new Mailer($this->getServiceLocator());
                     $sendMail = $mailer->sendMail($subject, $message, $to);
@@ -219,20 +219,20 @@ class ConnexionController extends AbstractController
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                /** @var User $user */
-                $user = $em->getRepository('Application\Entity\User')
+                /** @var Utilisateur $utilisateur */
+                $utilisateur = $em->getRepository('Application\Entity\Utilisateur')
                     ->findOneBy(array('email' => $form->getData()['email']));
 
-                if (is_null($user) || $user->getToken() != $token) {
+                if (is_null($utilisateur) || $utilisateur->getToken() != $token) {
                     $this->flashMessenger()
                         ->addErrorMessage('L\'adresse email ou le token est incorrect.');
                 } else {
-                    $user->setEncryptedPassword(
+                    $utilisateur->setEncryptedPassword(
                         Hash::compute('sha256', $form->getData()['password'])
                     );
-                    $user->setToken(null);
+                    $utilisateur->setToken(null);
 
-                    $em->persist($user);
+                    $em->persist($utilisateur);
                     $em->flush();
 
                     $subject = 'Réinitialisation de votre mot de passe';
@@ -241,14 +241,14 @@ class ConnexionController extends AbstractController
                     $viewMessage->setTemplate('mail/utilisateur-maj-mdp')
                         ->setVariables(
                             array(
-                                'user' => $user,
+                                'user' => $utilisateur,
                             )
                         )->setTerminal(true);
 
                     $viewRender = $this->getServiceLocator()->get('ViewRenderer');
                     $message = $viewRender->render($viewMessage);
 
-                    $to = $user->getEmail();
+                    $to = $utilisateur->getEmail();
 
                     $mailer = new Mailer($this->getServiceLocator());
                     $mailer->sendMail($subject, $message, $to);
@@ -271,12 +271,12 @@ class ConnexionController extends AbstractController
 
     public function monCompteAction()
     {
-        /** @var User $user */
-        $user = $this->identity();
-        if (!$user) {
+        /** @var Utilisateur $utilisateur */
+        $utilisateur = $this->identity();
+        if (!$utilisateur) {
             return $this->redirect()->toRoute('unauthorized');
         }
 
-        return $this->redirect()->toRoute('utilisateur', array('action' => 'detail', 'id' => $user->getId()));
+        return $this->redirect()->toRoute('utilisateur', array('action' => 'detail', 'id' => $utilisateur->getId()));
     }
 }

@@ -1,0 +1,42 @@
+<?php
+/**
+ * @var \Application\Entity\Utilisateur $utilisateur
+ * @var Zend\Navigation\Navigation $nav
+ * @var Zend\Navigation\Page\Mvc $page
+ */
+$nav = $this->navigation('Zend\Navigation\Utilisateur');
+
+$title = $nav->findOneBy('active', 1)->getTitle();
+$this->headTitle($title);
+?>
+
+<div class="row">
+    <div class="col-md-12 page-header tabbable-line">
+        <ul class="nav nav-tabs pull-right">
+
+            <?php $page = $nav->findOneBy('id', 'index') ?>
+            <?php if ($this->layout()->acl->isAllowed($page->getController(), $page->getAction())) : ?>
+                <li<?php echo $page->isActive(true) ? ' class="active"' : null ?>>
+                    <a id="menu-<?php echo $page->getId() ?>" href="<?php echo $page->getHref() ?>" title="<?php echo $page->getTitle() ?>">
+                        <?php echo $page->get('icon') ?>
+                        <span><?php echo $this->escapeHtml($page->getLabel()) ?></span>
+                    </a>
+                </li>
+            <?php endif ?>
+
+            <?php $page = $nav->findOneBy('id', 'creer') ?>
+            <?php if ($this->layout()->acl->isAllowed($page->getController(), $page->getAction())) : ?>
+                <li<?php echo $page->isActive(true) ? ' class="active"' : null ?>>
+                    <a id="menu-<?php echo $page->getId() ?>" href="<?php echo $page->getHref() ?>" title="<?php echo $page->getTitle() ?>">
+                        <?php echo $page->get('icon') ?>
+                        <span><?php echo $this->escapeHtml($page->getLabel()) ?></span>
+                    </a>
+                </li>
+            <?php endif ?>
+
+        </ul>
+        <h1><?php echo $title ?></h1>
+    </div>
+</div>
+
+<?php echo $this->partial('/layout/partial/flashmessenger') ?>

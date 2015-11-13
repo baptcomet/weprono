@@ -9,13 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Utilisateur
  * @package Application\Entity
  *
- * @ORM\Entity(repositoryClass="Application\Entity\Repository\UserRepository");
+ * @ORM\Entity(repositoryClass="Application\Entity\Repository\UtilisateurRepository");
  * @ORM\Table(
  *      name="user",
  *      uniqueConstraints={@ORM\UniqueConstraint(name="email_unique",columns={"email"})}
  * )
  */
-class User implements RoleList
+class Utilisateur implements RoleList
 {
     const TOKEN_PATTERN = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789';
     /**
@@ -96,7 +96,7 @@ class User implements RoleList
 
     /**
      * @param int $id
-     * @return User $this
+     * @return Utilisateur $this
      */
     public function setId($id)
     {
@@ -114,7 +114,7 @@ class User implements RoleList
 
     /**
      * @param String $prenom
-     * @return User $this
+     * @return Utilisateur $this
      */
     public function setPrenom($prenom)
     {
@@ -132,7 +132,7 @@ class User implements RoleList
 
     /**
      * @param String $nom
-     * @return User $this
+     * @return Utilisateur $this
      */
     public function setNom($nom)
     {
@@ -150,7 +150,7 @@ class User implements RoleList
 
     /**
      * @param String $email
-     * @return User $this
+     * @return Utilisateur $this
      */
     public function setEmail($email)
     {
@@ -168,7 +168,7 @@ class User implements RoleList
 
     /**
      * @param String $encryptedPassword
-     * @return User $this
+     * @return Utilisateur $this
      */
     public function setEncryptedPassword($encryptedPassword)
     {
@@ -186,7 +186,7 @@ class User implements RoleList
 
     /**
      * @param String $password
-     * @return User $this
+     * @return Utilisateur $this
      */
     public function setPassword($password)
     {
@@ -204,7 +204,7 @@ class User implements RoleList
 
     /**
      * @param String $passwordConfirmation
-     * @return User $this
+     * @return Utilisateur $this
      */
     public function setPasswordConfirmation($passwordConfirmation)
     {
@@ -222,7 +222,7 @@ class User implements RoleList
 
     /**
      * @param String $token
-     * @return User $this
+     * @return Utilisateur $this
      */
     public function setToken($token)
     {
@@ -240,7 +240,7 @@ class User implements RoleList
 
     /**
      * @param int $role
-     * @return User $this
+     * @return Utilisateur $this
      */
     public function setRole($role)
     {
@@ -281,7 +281,7 @@ class User implements RoleList
 
     /**
      * @param bool $disabled
-     * @return User $this
+     * @return Utilisateur $this
      */
     public function setDisabled($disabled)
     {

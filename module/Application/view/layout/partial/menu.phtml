@@ -1,7 +1,62 @@
+<?php
+/**
+ * @var Zend\Navigation\Page\Mvc $page
+ * @var Zend\Navigation\Page\Mvc $subPage
+ * @var Zend\Navigation\Navigation $nav
+ */
+$nav = $this->navigation('Zend\Navigation\Default');
+?>
 <div class="row">
-    <?php
-    /** @var Zend\View\Helper\Navigation\Menu $menu */
-    $menu = $this->navigation('Zend\Navigation\Default')->menu()->setPartial('/layout/renderer/nav/menu');
-    echo $menu->render();
-    ?>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="<?php echo $nav->findOneBy('id', 'accueil')->getHref() ?>"><img src="<?php echo $this->basePath('/img/logo-wp.png') ?>" height="60px" alt="We Prono"/></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <?php $page = $nav->findOneBy('id', 'utilisateurs') ?>
+                    <?php if ($this->layout()->acl->isAllowed($page->getController(), $page->getAction())) : ?>
+                        <li>
+                            <a id="menu-<?php echo $page->getId() ?>" href="<?php echo $page->getHref() ?>" title="<?php echo $page->getTitle() ?>">
+                                <?php echo $page->get('icon') ?>
+                                <span><?php echo $this->escapeHtml($page->getLabel()) ?></span>
+                            </a>
+                        </li>
+                    <?php endif ?>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <?php if (is_null($this->identity())) : ?>
+                        <?php $page = $nav->findOneBy('id', 'connexion') ?>
+                        <li>
+                            <a id="menu-<?php echo $page->getId() ?>" href="<?php echo $page->getHref() ?>" title="<?php echo $page->getTitle() ?>">
+                                <?php echo $page->get('icon') ?>
+                                <span><?php echo $this->escapeHtml($page->getLabel()) ?></span>
+                            </a>
+                        </li>
+                    <?php else : ?>
+                        <?php $page = $nav->findOneBy('id', 'mon-compte') ?>
+                        <li>
+                            <a id="menu-<?php echo $page->getId() ?>" href="<?php echo $page->getHref() ?>" title="<?php echo $page->getTitle() ?>">
+                                <?php echo $page->get('icon') ?>
+                                <span><?php echo $this->escapeHtml($page->getLabel()) ?></span>
+                            </a>
+                        </li>
+                        <?php $page = $nav->findOneBy('id', 'deconnexion') ?>
+                        <li>
+                            <a id="menu-<?php echo $page->getId() ?>" href="<?php echo $page->getHref() ?>" title="<?php echo $page->getTitle() ?>">
+                                <?php echo $page->get('icon') ?>
+                                <span><?php echo $this->escapeHtml($page->getLabel()) ?></span>
+                            </a>
+                        </li>
+                    <?php endif ?>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </div>

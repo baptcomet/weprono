@@ -6,12 +6,12 @@ return array(
         RoleList::ROLE_ADMINISTRATEUR => array(
             'Application\Controller\Index',
             'Application\Controller\Connexion',
-            'Application\Controller\User' /*=> array('index', 'add', 'detail', 'edit', '')*/,
+            'Application\Controller\Utilisateur',
         ),
         RoleList::ROLE_UTILISATEUR => array(
             'Application\Controller\Index' => array('index', 'non-autorise'),
             'Application\Controller\Connexion',
-            'Application\Controller\User' => array('index', 'detail', 'edit'),
+            'Application\Controller\Utilisateur' => array('index', 'detail', 'edit'),
         ),
         RoleList::ROLE_INVITE => array(
             'Application\Controller\Index' => array('index', 'non-autorise'),

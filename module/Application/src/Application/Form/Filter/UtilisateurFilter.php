@@ -2,7 +2,7 @@
 
 namespace Application\Form\Filter;
 
-use Application\Form\UserForm;
+use Application\Form\UtilisateurForm;
 use Doctrine\ORM\EntityManager;
 use DoctrineModule\Validator\UniqueObject;
 use Zend\Filter\Digits;
@@ -16,7 +16,7 @@ use Zend\Validator\Identical;
 use Zend\Validator\NotEmpty;
 use Zend\Validator\StringLength;
 
-class UserFilter extends InputFilter
+class UtilisateurFilter extends InputFilter
 {
     public function __construct(EntityManager $objectManager, $type)
     {
@@ -52,7 +52,7 @@ class UserFilter extends InputFilter
         $uniqueUserEmail = new UniqueObject(
             array(
                 'object_manager' => $objectManager,
-                'object_repository' => $objectManager->getRepository('Application\Entity\User'),
+                'object_repository' => $objectManager->getRepository('Application\Entity\Utilisateur'),
                 'fields' => 'email',
                 'use_context' => true
             )
@@ -96,12 +96,12 @@ class UserFilter extends InputFilter
 
         // Password
         $password = new Input('password');
-        $password->setRequired($type == UserForm::TYPE_ADD)
+        $password->setRequired($type == UtilisateurForm::TYPE_ADD)
             ->setContinueIfEmpty(true);
         $password->getFilterChain()->attach(new StringTrim());
         $password->getValidatorChain()
             ->attach(
-                $type == UserForm::TYPE_ADD ?
+                $type == UtilisateurForm::TYPE_ADD ?
                     new StringLength(
                         array(
                             'min' => 6,
@@ -114,12 +114,12 @@ class UserFilter extends InputFilter
 
         // Password Confirmation
         $passwordConfirmation = new Input('passwordConfirmation');
-        $passwordConfirmation->setRequired($type == UserForm::TYPE_ADD)
+        $passwordConfirmation->setRequired($type == UtilisateurForm::TYPE_ADD)
             ->setContinueIfEmpty(true);
         $passwordConfirmation->getFilterChain()->attach(new StringTrim());
         $passwordConfirmation->getValidatorChain()
             ->attach(
-                $type == UserForm::TYPE_ADD ?
+                $type == UtilisateurForm::TYPE_ADD ?
                     new StringLength(
                         array(
                             'min' => 6,

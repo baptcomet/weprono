@@ -1,7 +1,7 @@
 <?php
 namespace Application\Form;
 
-use Application\Form\Filter\UserFilter;
+use Application\Form\Filter\UtilisateurForm;
 use Doctrine\ORM\EntityManager;
 use Zend\Form\Element\Email;
 use Zend\Form\Element\Password;
@@ -15,7 +15,7 @@ class ResetPasswordForm extends AbstractForm
         $this->setAttribute('method', 'post');
         $this->setAttributes(array('id' => 'auth', 'role' => 'form'));
 
-        $this->setInputFilter(new UserFilter($objectManager, UserForm::TYPE_EDIT));
+        $this->setInputFilter(new UtilisateurForm($objectManager, UtilisateurForm::TYPE_EDIT));
 
         // Email
         $email = new Email('email');

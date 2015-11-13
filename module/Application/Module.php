@@ -18,13 +18,13 @@ class Module
         $app = $e->getApplication();
         $eventManager = $app->getEventManager();
 
-        $user = $e->getApplication()
+        $utilisateur = $e->getApplication()
             ->getServiceManager()
             ->get('Zend\Authentication\AuthenticationService')
             ->getIdentity();
 
         $this->acl = new Acl();
-        $this->acl->initialize($user);
+        $this->acl->initialize($utilisateur);
         //on passe l'objet ACL à la vue pour plus tard
         $e->getViewModel()->acl = $this->acl;
 

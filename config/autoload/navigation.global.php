@@ -1,65 +1,33 @@
 <?php
 return array(
     'navigation' => array(
-        // Main Menu
+
+        // NAVBAR
         'default' => array(
             array(
-                // Utilisé dans le menu sur le nom de l'app
-                'id' => 'home',
+                'id' => 'accueil',
                 'route' => 'accueil',
                 'controller' => 'Application\Controller\Index',
                 'action' => 'index',
             ),
             array(
+                'id' => 'utilisateurs',
+                'label' => 'Utilisateurs',
                 'route' => 'utilisateurs',
-                'action' => 'list',
-                'controller' => 'Application\Controller\User',
-                'pages' => array(
-                    array(
-                        'route' => 'utilisateurs',
-                        'controller' => 'Application\Controller\User',
-                        'action' => 'list',
-                    ),
-                    array(
-                        'route' => 'utilisateurs',
-                        'controller' => 'Application\Controller\User',
-                        'action' => 'add',
-                    ),
-                    array(
-                        'controller' => 'Application\Controller\User',
-                        'route' => 'utilisateur',
-                        'action' => 'detail',
-                    ),
-                    array(
-                        'controller' => 'Application\Controller\User',
-                        'route' => 'utilisateur',
-                        'action' => 'edit',
-                    ),
-                    array(
-                        'controller' => 'Application\Controller\User',
-                        'route' => 'utilisateur',
-                        'action' => 'disable',
-                    ),
-                    array(
-                        'controller' => 'Application\Controller\User',
-                        'route' => 'utilisateur',
-                        'action' => 'enable',
-                    ),
-                    array(
-                        'controller' => 'Application\Controller\User',
-                        'route' => 'utilisateur',
-                        'action' => 'delete',
-                    ),
-                ),
+                'action' => 'index',
+                'controller' => 'Application\Controller\Utilisateur',
             ),
             array(
+                'id' => 'mon-compte',
+                'label' => 'Mon compte',
+                'icon' => '<i class="fa fa-user fa-fw text-info"></i>&nbsp;',
                 'route' => 'utilisateur',
                 'action' => 'detail',
-                'controller' => 'Application\Controller\User',
+                'controller' => 'Application\Controller\Utilisateur',
                 'params' => array('id' => 0),
                 'pages' => array(
                     array(
-                        'controller' => 'Application\Controller\User',
+                        'controller' => 'Application\Controller\Utilisateur',
                         'route' => 'utilisateur',
                         'action' => 'edit',
                         'params' => array('id' => 0),
@@ -67,80 +35,67 @@ return array(
                 )
             ),
             array(
+                'id' => 'deconnexion',
+                'label' => 'Déconnexion',
+                'icon' => '<i class="fa fa-sign-out text-danger fa-fw"></i>&nbsp;',
                 'route' => 'connexion',
                 'action' => 'deconnexion',
                 'controller' => 'Application\Controller\Connexion',
             ),
-        ),
-
-        // Login
-        'connexion' => array(
             array(
+                'id' => 'connexion',
+                'label' => 'Connexion',
+                'icon' => '<i class="fa fa-sign-in fa-fw"></i>&nbsp;',
                 'route' => 'connexion',
                 'action' => 'index',
                 'controller' => 'Application\Controller\Connexion',
             ),
-            array(
-                'route' => 'connexion',
-                'action' => 'mdp-oublie',
-                'controller' => 'Application\Controller\Connexion',
-            ),
-            array(
-                'route' => 'connexion',
-                'action' => 'inscription',
-                'controller' => 'Application\Controller\Connexion',
-            ),
-            array(
-                'route' => 'password-recovery',
-                'action' => 'reinitialisation-mdp',
-                'controller' => 'Application\Controller\Connexion',
-            ),
         ),
 
-        // Header
-        'utilisateurs' => array(
-            array(
-                'id' => 'index',
-                'controller' => 'Application\Controller\User',
-                'route' => 'utilisateurs',
-                'action' => 'list',
-            ),
-            array(
-                'controller' => 'Application\Controller\User',
-                'route' => 'utilisateurs',
-                'action' => 'add',
-            ),
-        ),
+        // UTILISATEUR
         'utilisateur' => array(
             array(
+                'id' => 'index',
+                'label' => 'Liste',
+                'title' => 'Utilisateurs',
+                'controller' => 'Application\Controller\Utilisateur',
+                'route' => 'utilisateurs',
+                'action' => 'index',
+            ),
+            array(
+                'id' => 'creer',
+                'label' => 'Créer',
+                'title' => 'Créer un utilisateur',
+                'controller' => 'Application\Controller\Utilisateur',
+                'route' => 'utilisateurs',
+                'action' => 'creer',
+            ),
+            array(
                 'id' => 'detail',
-                'controller' => 'Application\Controller\User',
+                'label' => 'Détail',
+                'title' => 'Détail',
+                'icon' => '<i class="fa fa-info-circle text-info fa-fw"></i>',
+                'controller' => 'Application\Controller\Utilisateur',
                 'route' => 'utilisateur',
                 'action' => 'detail',
             ),
             array(
-                'id' => 'edit',
-                'controller' => 'Application\Controller\User',
+                'id' => 'modifier',
+                'label' => 'Modifier',
+                'title' => 'Modifier',
+                'icon' => '<i class="fa fa-pencil text-warning fa-fw"></i>',
+                'controller' => 'Application\Controller\Utilisateur',
                 'route' => 'utilisateur',
-                'action' => 'edit',
+                'action' => 'modifier',
             ),
             array(
-                'id' => 'disable',
-                'controller' => 'Application\Controller\User',
+                'id' => 'supprimer',
+                'label' => 'Supprimer',
+                'title' => 'Supprimer',
+                'icon' => '<i class="fa fa-trash text-danger fa-fw"></i>',
+                'controller' => 'Application\Controller\Utilisateur',
                 'route' => 'utilisateur',
-                'action' => 'disable',
-            ),
-            array(
-                'id' => 'enable',
-                'controller' => 'Application\Controller\User',
-                'route' => 'utilisateur',
-                'action' => 'enable',
-            ),
-            array(
-                'id' => 'delete',
-                'controller' => 'Application\Controller\User',
-                'route' => 'utilisateur',
-                'action' => 'delete',
+                'action' => 'supprimer',
             ),
         ),
     ),

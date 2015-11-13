@@ -14,6 +14,13 @@ if (php_sapi_name() === 'cli-server') {
     unset($path);
 }
 
+function debug($var) {
+    echo '<pre>';
+    var_dump($var);
+    echo '</pre>';
+    die;
+}
+
 // Setup autoloading
 require 'init_autoloader.php';
 

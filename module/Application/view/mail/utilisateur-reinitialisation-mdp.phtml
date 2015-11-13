@@ -1,11 +1,11 @@
 <?php
 /**
- * @var User $user
+ * @var Utilisateur $utilisateur
  */
 
-use Application\Entity\User;
+use Application\Entity\Utilisateur;
 
 ?>
-<h1>Bonjour <?php echo $user->getPrenom() ?>,</h1>
+<h1>Bonjour <?php echo $utilisateur->getPrenom() ?>,</h1>
 <p>Vous venez de faire une demande de réinitialisation de mot de passe.
-    <a href="<?php echo $this->url('password-recovery', array('token' => $user->getToken()), array('force_canonical' => true,)) ?>">Cliquez ici</a> si vous avez effectué cette demande, sinon ignorez cet-email.</p>
+    <a href="<?php echo $this->url('password-recovery', array('token' => $utilisateur->getToken()), array('force_canonical' => true,)) ?>">Cliquez ici</a> si vous avez effectué cette demande, sinon ignorez cet-email.</p>

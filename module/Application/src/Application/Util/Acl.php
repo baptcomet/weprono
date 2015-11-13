@@ -8,13 +8,13 @@ class Acl implements RoleList
     private $rights = array();
 
     /**
-     * @param \Application\Entity\User $user
+     * @param \Application\Entity\Utilisateur $utilisateur
      */
-    public function initialize($user)
+    public function initialize($utilisateur)
     {
         $acl = include __DIR__ . '../../../../config/module.acl.roles.php';
 
-        $role = !is_null($user) ? $user->getRole() : self::ROLE_INVITE;
+        $role = !is_null($utilisateur) ? $utilisateur->getRole() : self::ROLE_INVITE;
         $this->setRole($role);
 
         $rights = $acl['roles'][$role];

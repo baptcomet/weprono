@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller;
 
-use Application\Entity\User;
+use Application\Entity\Utilisateur;
 use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractController
@@ -17,12 +17,12 @@ class IndexController extends AbstractController
 
     public function monCompteAction()
     {
-        /** @var User $user */
-        $user = $this->identity();
-        if (!$user) {
+        /** @var Utilisateur $utilisateur */
+        $utilisateur = $this->identity();
+        if (!$utilisateur) {
             return $this->redirect()->toRoute('unauthorized');
         }
 
-        return $this->redirect()->toRoute('utilisateur', array('action' => 'detail', 'id' => $user->getId()));
+        return $this->redirect()->toRoute('utilisateur', array('action' => 'detail', 'id' => $utilisateur->getId()));
     }
 }
