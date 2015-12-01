@@ -3,6 +3,7 @@
 namespace Application\Entity;
 
 use Application\Util\RoleList;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -71,6 +72,18 @@ class Utilisateur implements RoleList
      * @var int
      */
     protected $role;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Ligue", mappedBy="createur", fetch="EXTRA_LAZY")
+     * @var ArrayCollection
+     */
+    protected $liguesCrees;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Ligue", mappedBy="joueurs")
+     * @var ArrayCollection
+     **/
+    protected $ligues;
 
     /**
      * @ORM\Column(name="disabled", type="boolean", options={"default" = 0})
@@ -259,6 +272,70 @@ class Utilisateur implements RoleList
             self::ROLE_UTILISATEUR => 'Utilisateur',
             self::ROLE_ADMINISTRATEUR => 'Administrateur',
         );
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getLigues()
+    {
+        return $this->ligues;
+    }
+
+    /**
+     * @param ArrayCollection $ligues
+     * @return Utilisateur $this
+     */
+    public function setLigues($ligues)
+    {
+        $this->ligues = $ligues;
+        return $this;
+    }
+
+    /**
+     * @param Ligue $ligue
+     * @return Utilisateur $this
+     */
+    public function addLigue($ligue)
+    {
+        if (!$this->ligues->contains($ligue)) {
+            $this->ligues->add($ligue);
+        }
+        return $this;
+    }
+
+    /**
+     * @param array $ligues
+     * @return Utilisateur $this
+     */
+    public function addLigues($ligues)
+    {
+        foreach ($ligues as $ligue) {
+            $this->addLigue($ligue);
+        }
+        return $this;
+    }
+
+    /**
+     * @param Ligue $ligue
+     * @return Utilisateur $this;
+     */
+    public function removeLigue($ligue)
+    {
+        $this->ligues->remove($ligue);
+        return $this;
+    }
+
+    /**
+     * @param array $connaisances
+     * @return Utilisateur $this
+     */
+    public function removeLigues($connaisances)
+    {
+        foreach ($connaisances as $connaisance) {
+            $this->removeLigue($connaisance);
+        }
+        return $this;
     }
 
     /**
