@@ -20,6 +20,15 @@ $nav = $this->navigation('Zend\Navigation\Default');
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-left">
+                    <?php $page = $nav->findOneBy('id', 'ligues') ?>
+                    <?php if ($this->layout()->acl->isAllowed($page->getController(), $page->getAction())) : ?>
+                        <li>
+                            <a id="menu-<?php echo $page->getId() ?>" href="<?php echo $page->getHref() ?>" title="<?php echo $page->getTitle() ?>">
+                                <?php echo $page->get('icon') ?>
+                                <span><?php echo $this->escapeHtml($page->getLabel()) ?></span>
+                            </a>
+                        </li>
+                    <?php endif ?>
                     <?php $page = $nav->findOneBy('id', 'utilisateurs') ?>
                     <?php if ($this->layout()->acl->isAllowed($page->getController(), $page->getAction())) : ?>
                         <li>

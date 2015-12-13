@@ -7,6 +7,7 @@ return array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Connexion' => 'Application\Controller\ConnexionController',
             'Application\Controller\Utilisateur' => 'Application\Controller\UtilisateurController',
+            'Application\Controller\Ligue' => 'Application\Controller\LigueController',
         ),
     ),
 
@@ -95,6 +96,36 @@ return array(
                         'controller' => 'Application\Controller\Utilisateur',
                         'action' => 'detail',
                         'id' => 0,
+                    )
+                ),
+            ),
+            'ligues' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/ligues[/:action][/]',
+                    'constraints' => array(
+                        'action' => 'index|creer',
+                        'id' => '[0-9]*',
+                    ),
+                    'defaults' => array(
+                        'module' => 'Application',
+                        'controller' => 'Application\Controller\Ligue',
+                        'action' => 'index',
+                    )
+                )
+            ),
+            'ligue' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/ligue[/:action][/:id][/]',
+                    'constraints' => array(
+                        'action' => 'detail|modifier|supprimer',
+                        'id' => '[0-9]*',
+                    ),
+                    'defaults' => array(
+                        'module' => 'Application',
+                        'controller' => 'Application\Controller\Ligue',
+                        'action' => 'detail',
                     )
                 ),
             ),

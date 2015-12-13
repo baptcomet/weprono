@@ -339,6 +339,70 @@ class Utilisateur implements RoleList
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getLiguesCrees()
+    {
+        return $this->liguesCrees;
+    }
+
+    /**
+     * @param ArrayCollection $liguesCrees
+     * @return Utilisateur $this
+     */
+    public function setLiguesCrees($liguesCrees)
+    {
+        $this->liguesCrees = $liguesCrees;
+        return $this;
+    }
+
+    /**
+     * @param Ligue $ligueCree
+     * @return Utilisateur $this
+     */
+    public function addLigueCree($ligueCree)
+    {
+        if (!$this->liguesCrees->contains($ligueCree)) {
+            $this->liguesCrees->add($ligueCree);
+        }
+        return $this;
+    }
+
+    /**
+     * @param array $liguesCrees
+     * @return Utilisateur $this
+     */
+    public function addLiguesCrees($liguesCrees)
+    {
+        foreach ($liguesCrees as $ligueCree) {
+            $this->addLigueCree($ligueCree);
+        }
+        return $this;
+    }
+
+    /**
+     * @param Ligue $ligueCree
+     * @return Utilisateur $this;
+     */
+    public function removeLigueCree($ligueCree)
+    {
+        $this->liguesCrees->remove($ligueCree);
+        return $this;
+    }
+
+    /**
+     * @param array $ligueCrees
+     * @return Utilisateur $this
+     */
+    public function removeLiguesCrees($ligueCrees)
+    {
+        foreach ($ligueCrees as $ligueCree) {
+            $this->removeLigueCree($ligueCree);
+        }
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function isDisabled()

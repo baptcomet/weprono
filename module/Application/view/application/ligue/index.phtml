@@ -1,0 +1,53 @@
+<?php
+/**
+ * @var Doctrine\Common\Collections\ArrayCollection $ligues
+ * @var Application\Entity\Ligue $ligue
+ * @var Zend\Navigation\Page\Mvc $nav
+ */
+
+/** @var \Application\Util\Acl $acl */
+$acl = $this->layout()->acl;
+
+echo $this->partial('partial/header-liste');
+
+$nav = $this->navigation('Zend\Navigation\Ligue');
+$items = array('detail', 'modifier', 'supprimer');
+?>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Nom</th>
+        <th>Commissionnaire</th>
+        <th>Date début</th>
+        <th>Date fin</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($ligues as $ligue) : ?>
+        <tr>
+            <td><?php echo $ligue->getNom() ?></td>
+            <td><?php echo $ligue->getCreateur()->getNom() ?></td>
+            <td><?php echo $ligue->getDateDebut() ?></td>
+            <td><?php echo $ligue->getDateFin() ?></td>
+            <td>
+                <ul class="list-inline pull-right">
+                    <?php foreach ($items as $action) :
+                        /** @var Zend\Navigation\Page\Mvc $item */
+                        $item = $nav->findOneBy('id', $action);
+                        if (!$this->layout()->acl->isAllowed($item->getController(), $item->getAction())) {
+                            continue;
+                        }
+                        $item->setParams(array('id' => $ligue->getId())) ?>
+                        <li>
+                            <a href="<?php echo $item->getHref() ?>" title="<?php echo $item->getTitle() ?>">
+                                <?php echo $item->get('icon') ?>
+                            </a>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            </td>
+        </tr>
+    <?php endforeach ?>
+    </tbody>
+</table>

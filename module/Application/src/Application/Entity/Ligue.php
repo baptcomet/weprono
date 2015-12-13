@@ -217,7 +217,7 @@ class Ligue
     }
 
     /**
-     * @return mixed
+     * @return Utilisateur
      */
     public function getCreateur()
     {

@@ -113,7 +113,7 @@ class ConnexionController extends AbstractController
                 $viewMessage->setTemplate('mail/utilisateur-nouveau')
                     ->setVariables(
                         array(
-                            'user' => $utilisateur,
+                            'utilisateur' => $utilisateur,
                         )
                     )->setTerminal(true);
 
@@ -168,7 +168,7 @@ class ConnexionController extends AbstractController
                     $viewMessage->setTemplate('mail/utilisateur-reinitialisation-mdp')
                         ->setVariables(
                             array(
-                                'user' => $utilisateur,
+                                'utilisateur' => $utilisateur,
                             )
                         )->setTerminal(true);
 
@@ -241,7 +241,7 @@ class ConnexionController extends AbstractController
                     $viewMessage->setTemplate('mail/utilisateur-maj-mdp')
                         ->setVariables(
                             array(
-                                'user' => $utilisateur,
+                                'utilisateur' => $utilisateur,
                             )
                         )->setTerminal(true);
 

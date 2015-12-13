@@ -19,6 +19,7 @@ switch ($_SERVER['SERVER_ADDR']) {
 }
 
 define('APPLICATION_NAME', 'We Prono');
+define('URL_NBA_API', 'https://erikberg.com/events.json?sport=nba');
 
 return array(
     'modules' => array(
