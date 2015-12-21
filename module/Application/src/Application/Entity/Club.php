@@ -163,6 +163,14 @@ class Club
     }
 
     /**
+     * @return string
+     */
+    public function getLongName()
+    {
+        return $this->city . ' ' . $this->name;
+    }
+
+    /**
      * @param string $shortName
      */
     public function setShortName($shortName)

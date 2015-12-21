@@ -80,9 +80,9 @@ return array(
             array(
                 'id' => 'detail',
                 'label' => 'Détail',
-                'title' => 'Détail',
+                'title' => 'Détail de la ligue',
                 'icon' => '<i class="fa fa-info-circle text-info fa-fw"></i>',
-                'controller' => 'Application\Controller\Ligues',
+                'controller' => 'Application\Controller\Ligue',
                 'route' => 'ligue',
                 'action' => 'detail',
             ),

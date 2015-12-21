@@ -5,6 +5,8 @@
  * @var Zend\Navigation\Navigation $nav
  */
 $nav = $this->navigation('Zend\Navigation\Default');
+
+// TODO les classes active
 ?>
 <div class="row">
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -22,7 +24,7 @@ $nav = $this->navigation('Zend\Navigation\Default');
                 <ul class="nav navbar-nav navbar-left">
                     <?php $page = $nav->findOneBy('id', 'ligues') ?>
                     <?php if ($this->layout()->acl->isAllowed($page->getController(), $page->getAction())) : ?>
-                        <li>
+                        <li<?php echo $page->isActive(true) ? ' class="active"' : '' ?>>
                             <a id="menu-<?php echo $page->getId() ?>" href="<?php echo $page->getHref() ?>" title="<?php echo $page->getTitle() ?>">
                                 <?php echo $page->get('icon') ?>
                                 <span><?php echo $this->escapeHtml($page->getLabel()) ?></span>
@@ -31,7 +33,7 @@ $nav = $this->navigation('Zend\Navigation\Default');
                     <?php endif ?>
                     <?php $page = $nav->findOneBy('id', 'utilisateurs') ?>
                     <?php if ($this->layout()->acl->isAllowed($page->getController(), $page->getAction())) : ?>
-                        <li>
+                        <li<?php echo $page->isActive(true) ? ' class="active"' : '' ?>>
                             <a id="menu-<?php echo $page->getId() ?>" href="<?php echo $page->getHref() ?>" title="<?php echo $page->getTitle() ?>">
                                 <?php echo $page->get('icon') ?>
                                 <span><?php echo $this->escapeHtml($page->getLabel()) ?></span>

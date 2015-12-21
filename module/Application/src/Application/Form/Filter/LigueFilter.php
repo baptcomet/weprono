@@ -46,7 +46,7 @@ class LigueFilter extends InputFilter
             //->getValidatorChain()
             //->attach(new DateTime(array('format' => 'd/m/Y')));
         // TODO
-        $this->add($dateDebut);
+        //$this->add($dateDebut);
 
         // Date fin
         $dateFin = new Input('dateFin');
@@ -54,7 +54,7 @@ class LigueFilter extends InputFilter
             //->getValidatorChain()
             //->attach(new DateTime(array('format' => 'd/m/Y')));
         // TODO
-        $this->add($dateFin);
+        //$this->add($dateFin);
 
         // TODO joueurs
     }

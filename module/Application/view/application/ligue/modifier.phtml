@@ -1,11 +1,11 @@
 <?php
 /**
  * @var int $id
- * @var Application\Form\UtilisateurForm $form
- * @var Application\Entity\Utilisateur $utilisateur
+ * @var Application\Form\LigueForm $form
+ * @var Application\Entity\Ligue $ligue
  */
 
-echo $this->partial('partial/header-detail', array('id' => $id, 'utilisateur' => $utilisateur));
+echo $this->partial('partial/header-detail', array('id' => $id));
 $form->prepare();
 ?>
 
@@ -15,23 +15,13 @@ $form->prepare();
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="identification" class="panel-title"><i class="fa fa-user fa-fw"></i>&nbsp; Informations personnelles</h3>
+                <h3 id="identification" class="panel-title"><i class="fa fa-soccer-ball-o fa-fw"></i>&nbsp; Identification</h3>
             </div>
             <div class="panel-body">
-                <?php echo $this->formRow($form->get('prenom')) ?>
                 <?php echo $this->formRow($form->get('nom')) ?>
-                <?php echo $this->formRow($form->get('email')) ?>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 id="password" class="panel-title"><i class="fa fa-key fa-fw"></i>&nbsp; Mot de passe</h3>
-            </div>
-            <div class="panel-body">
-                <?php echo $this->formRow($form->get('password')) ?>
-                <?php echo $this->formRow($form->get('passwordConfirmation')) ?>
+                <?php echo $this->formRow($form->get('image')) ?>
+                <?php //echo $this->formRow($form->get('dateDebut')) ?>
+                <?php //echo $this->formRow($form->get('dateFin')) ?>
             </div>
         </div>
     </div>

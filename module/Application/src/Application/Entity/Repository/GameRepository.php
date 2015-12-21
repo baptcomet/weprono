@@ -21,7 +21,7 @@ class GameRepository extends EntityRepository
         $qb->select('g')
             ->from('Application\Entity\Game', 'g')
             ->where('g.date = :date')
-            ->setParameter('date', $dateTime);
+            ->setParameter('date', $dateTime->format('Y-m-d'));
 
         return new ArrayCollection($qb->getQuery()->getResult());
     }
@@ -56,8 +56,6 @@ class GameRepository extends EntityRepository
      */
     public function apiRetrieveGamesBySeason($season)
     {
-        // TODO tester si game already exists
-
         $curl = new Curl();
         $entityManager = $this->getEntityManager();
         /** @var ClubRepository $clubRepository */
@@ -65,9 +63,10 @@ class GameRepository extends EntityRepository
 
         // Loop through year days
         $date = ($season-1) . '-10-26';
-        $date = ($season-1) . '-12-11';
+        //$date = '2016-01-06';
         // End date
         $end_date = $season . '-06-31';
+        //$end_date = '2016-01-14';
 
         while (strtotime($date) <= strtotime($end_date)) {
             $date = date("Ymd", strtotime("+1 day", strtotime($date)));
@@ -78,13 +77,14 @@ class GameRepository extends EntityRepository
                 && sizeof($result['event'])) {
                 foreach ($result['event'] as $gameData) {
                     $eventId = $gameData['event_id'];
-                    $dateTimeStart = DateTime::createFromFormat('Y-m-d', substr($gameData['start_date_time'], 0, 10));
-                    $homeTeam = $clubRepository->findOneByApiId($gameData['home_team']['team_id']);
-                    $awayTeam = $clubRepository->findOneByApiId($gameData['away_team']['team_id']);
-                    $homeScore = $gameData['home_points_scored'] == -1 ? 0 : $gameData['home_points_scored'];
-                    $awayScore = $gameData['away_points_scored'] == -1 ? 0 : $gameData['away_points_scored'];
 
                     if (!$this->gameAlreadyExists($eventId)) {
+                        $dateTimeStart = DateTime::createFromFormat('Y-m-d', substr($gameData['start_date_time'], 0, 10));
+                        $homeTeam = $clubRepository->findOneByApiId($gameData['home_team']['team_id']);
+                        $awayTeam = $clubRepository->findOneByApiId($gameData['away_team']['team_id']);
+                        $homeScore = $gameData['home_points_scored'] == -1 ? 0 : $gameData['home_points_scored'];
+                        $awayScore = $gameData['away_points_scored'] == -1 ? 0 : $gameData['away_points_scored'];
+
                         $game = new Game();
                         $game->setSlug($eventId)
                             ->setDate($dateTimeStart)
@@ -93,12 +93,12 @@ class GameRepository extends EntityRepository
                             ->setScoreHome($homeScore)
                             ->setScoreAway($awayScore);
                         $entityManager->persist($game);
-                        $entityManager->flush();
-                        debug('DID IT');
                     }
                 }
+                //$entityManager->flush();
             }
         }
+        $entityManager->flush();
 
         debug('Finished');
     }

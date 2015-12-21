@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Ligue
  * @package Application\Entity
  *
- * @ORM\Entity(repositoryClass="Application\Entity\Repository\LigueRepository");
+ * @ORM\Entity
  * @ORM\Table(name="ligue")
  */
 class Ligue
@@ -75,6 +75,15 @@ class Ligue
      * @var bool
      */
     protected $disabled;
+
+    public function __construct()
+    {
+        $this->dateCreation = new DateTime();
+        $this->dateDebut = new DateTime();
+        $this->dateFin = DateTime::createFromFormat('Y-m-d', Game::SEASON_END_DATE);
+        $this->joueurs = new ArrayCollection();
+        $this->disabled = false;
+    }
 
     /**
      * @return int

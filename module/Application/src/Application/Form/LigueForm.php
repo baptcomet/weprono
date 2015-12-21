@@ -65,10 +65,9 @@ class LigueForm extends AbstractForm
                 array(
                     'id' => 'dateDebut',
                     'class' => 'form-control',
-                    'required' => true,
                 )
             );
-        $this->add($dateDebut);
+        //$this->add($dateDebut);
 
         // Date fin
         $dateFin = new Text('dateFin');
@@ -78,10 +77,9 @@ class LigueForm extends AbstractForm
                 array(
                     'id' => 'dateFin',
                     'class' => 'form-control',
-                    'required' => true,
                 )
             );
-        $this->add($dateFin);
+        //$this->add($dateFin);
 
         // Submit
         $submit = new Submit('submit');

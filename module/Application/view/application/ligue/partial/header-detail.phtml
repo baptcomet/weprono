@@ -1,11 +1,10 @@
 <?php
 /**
- * @var \Application\Entity\Utilisateur $utilisateur
  * @var Zend\Navigation\Navigation $nav
  * @var Zend\Navigation\Page\Mvc $page
  * @var int $id
  */
-$nav = $this->navigation('Zend\Navigation\Utilisateur');
+$nav = $this->navigation('Zend\Navigation\Ligue');
 
 $title = $nav->findOneBy('active', 1)->getTitle();
 $this->headTitle($title);

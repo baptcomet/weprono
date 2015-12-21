@@ -1,15 +1,15 @@
 <?php
 /**
  * @var int $id
- * @var Application\Entity\Utilisateur $utilisateur
+ * @var Application\Entity\Ligue $ligue
  * @var Application\Form\ValidationForm $form
  */
 
-echo $this->partial('partial/header-detail', array('id' => $id, 'utilisateur' => $utilisateur));
+echo $this->partial('partial/header-detail', array('id' => $id));
 $form->prepare();
 ?>
 
-<p>Êtes-vous sûr de vouloir supprimer l'utilisateur <b><?php echo $utilisateur->getPrenom() . ' ' . $utilisateur->getNom() ?></b> ?</p>
+<p>Êtes-vous sûr de vouloir supprimer la ligue <b><?php echo $ligue->getNom() ?></b> ?</p>
 
 <div>
     <?php echo $this->form()->openTag($form) ?>

@@ -46,6 +46,14 @@ class Curl
             curl_setopt($this->request, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($this->request, CURLOPT_RETURNTRANSFER, true);
 
+            //$username = 'test';
+            //$password = 'test';
+            //curl_setopt($this->request, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+            //curl_setopt($this->request, CURLOPT_USERPWD, "$username:$password");
+
+            $accesstoken = 'cd786f52-40ac-4d18-8afc-a76e9441c856';
+            curl_setopt($this->request, CURLOPT_POSTFIELDS, urlencode($accesstoken));
+
             $userAgent = 'MyRobot/1.0 (baptiste.comet@gmail.com)';
             curl_setopt($this->request, CURLOPT_USERAGENT, $userAgent);
 

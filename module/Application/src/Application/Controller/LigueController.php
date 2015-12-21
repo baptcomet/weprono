@@ -7,7 +7,8 @@ use Application\Entity\Repository\GameRepository;
 use Application\Entity\Utilisateur;
 use Application\Form\DeleteForm;
 use Application\Form\LigueForm;
-use Application\Util\Mailer;
+use DateInterval;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Zend\Http\Request;
@@ -23,11 +24,6 @@ class LigueController extends AbstractActionController
 
         /** @var EntityManager $entityManager */
         $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-
-
-        /** @var GameRepository $gameRepository */
-        $gameRepository = $entityManager->getRepository('Application\Entity\Game');
-        $gameRepository->apiRetrieveGamesBySeason(2016);
 
         if ($utilisateur->getRole() == Utilisateur::ROLE_ADMINISTRATEUR) {
             $ligues = $entityManager->getRepository('Application\Entity\Ligue')->findAll();
@@ -48,24 +44,36 @@ class LigueController extends AbstractActionController
 
     public function detailAction()
     {
-        // TODO check ACL
         $id = $this->params()->fromRoute('id');
 
-        /** @var Ligue $ligue */
-        $ligue = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager')
-            ->getRepository('Application\Entity\Ligue')
-            ->find($id);
+        /** @var EntityManager $entityManager */
+        $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        /** @var GameRepository $gameRepo */
+        $gameRepo = $entityManager->getRepository('Application\Entity\Game');
 
+        //if ($id == 99) {
+        //    $gameRepo->apiRetrieveGamesBySeason(2015);
+        //}
+
+        /** @var Ligue $ligue */
+        $ligue = $entityManager->getRepository('Application\Entity\Ligue')->find($id);
         if (is_null($ligue)) {
             $this->flashMessenger()
                 ->addErrorMessage('La ligue n\'existe pas.');
             return $this->redirect()->toRoute('ligues');
         }
+        $tonight = new DateTime();
+        $yesterday = new DateTime();
+        $yesterday->sub(new DateInterval('P1D'));
+        $yesterdaysGames = $gameRepo->findByDate($yesterday);
+        $tonightsGames = $gameRepo->findByDate($tonight);
 
         $view = new ViewModel();
         return $view->setVariables(
             array(
                 'ligue' => $ligue,
+                'yesterdaysGames' => $yesterdaysGames,
+                'tonightsGames' => $tonightsGames,
                 'id' => $id,
             )
         );
@@ -89,31 +97,13 @@ class LigueController extends AbstractActionController
         if ($request->isPost()) {
             $form->setData($request->getPost());
             if ($form->isValid()) {
+                $ligue->setCreateur($utilisateur);
+                $ligue->addJoueur($utilisateur);
                 $entityManager->persist($ligue);
                 $entityManager->flush();
 
                 $this->flashMessenger()
                     ->addSuccessMessage('La ligue a bien été créé.');
-
-                $subject = 'Votre ligue a bien été créé';
-
-                $viewMessage = new ViewModel();
-                $viewMessage->setTemplate('mail/ligue-cree')
-                    ->setVariables(
-                        array(
-                            'user' => $utilisateur,
-                            'ligue' => $ligue,
-                        )
-                    )->setTerminal(true);
-
-                $viewRender = $this->getServiceLocator()->get('ViewRenderer');
-                $message = $viewRender->render($viewMessage);
-
-                $to = $utilisateur->getEmail();
-
-                $mailer = new Mailer($this->getServiceLocator());
-                $mailer->sendMail($subject, $message, $to);
-
                 return $this->redirect()->toRoute('ligues');
             }
         }

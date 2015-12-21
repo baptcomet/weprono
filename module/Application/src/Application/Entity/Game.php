@@ -14,6 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Game
 {
+    const SEASON_START_DATE = '2015-10-26';
+    const SEASON_END_DATE = '2016-06-31';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -77,7 +80,7 @@ class Game
     }
 
     /**
-     * @return mixed
+     * @return Club
      */
     public function getEquipeHome()
     {
@@ -85,7 +88,7 @@ class Game
     }
 
     /**
-     * @param mixed $equipeHome
+     * @param Club $equipeHome
      * @return Game
      */
     public function setEquipeHome($equipeHome)
@@ -95,7 +98,7 @@ class Game
     }
 
     /**
-     * @return mixed
+     * @return Club
      */
     public function getEquipeAway()
     {
@@ -103,7 +106,7 @@ class Game
     }
 
     /**
-     * @param mixed $equipeAway
+     * @param Club $equipeAway
      * @return Game
      */
     public function setEquipeAway($equipeAway)

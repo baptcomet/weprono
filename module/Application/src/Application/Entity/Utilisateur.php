@@ -156,6 +156,14 @@ class Utilisateur implements RoleList
     /**
      * @return String
      */
+    public function getNomComplet()
+    {
+        return $this->prenom . ' ' .$this->nom;
+    }
+
+    /**
+     * @return String
+     */
     public function getEmail()
     {
         return $this->email;

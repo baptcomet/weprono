@@ -1,6 +1,7 @@
 <?php
 /**
  * @var Doctrine\Common\Collections\ArrayCollection $ligues
+ * @var Doctrine\Common\Collections\ArrayCollection $liguesCrees
  * @var Application\Entity\Ligue $ligue
  * @var Zend\Navigation\Page\Mvc $nav
  */
@@ -27,7 +28,7 @@ $items = array('detail', 'modifier', 'supprimer');
     <?php foreach ($ligues as $ligue) : ?>
         <tr>
             <td><?php echo $ligue->getNom() ?></td>
-            <td><?php echo $ligue->getCreateur()->getNom() ?></td>
+            <td><?php echo $ligue->getCreateur()->getNomComplet() ?></td>
             <td><?php echo $ligue->getDateDebut() ?></td>
             <td><?php echo $ligue->getDateFin() ?></td>
             <td>

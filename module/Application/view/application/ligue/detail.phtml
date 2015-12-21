@@ -1,25 +1,100 @@
 <?php
 /**
  * @var int $id
- * @var Application\Entity\Utilisateur $utilisateur
+ * @var Application\Entity\Ligue $ligue
+ * @var Application\Entity\Utilisateur $joueur
+ * @var Application\Entity\Game $game
+ * @var Doctrine\Common\Collections\ArrayCollection $yesterdaysGames
+ * @var Doctrine\Common\Collections\ArrayCollection $tonightsGames
  */
-echo $this->partial('partial/header-detail', array('id' => $id, 'utilisateur' => $utilisateur));
+echo $this->partial('partial/header-detail', array('id' => $id));
 
 ?>
-<div class="col-md-6">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 id="identification" class="panel-title"><i class="fa fa-user fa-fw"></i>&nbsp; <?php echo $utilisateur->getPrenom() . ' ' . $utilisateur->getNom() ?></h3>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-dribbble fa-fw"></i>&nbsp;
+                    <?php echo $ligue->getNom() ?>
+                </h3>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>Nom</th>
+                    <td><?php echo $ligue->getNom() ?></td>
+                </tr>
+                <tr>
+                    <th>Commissionnaire</th>
+                    <td><?php echo $ligue->getCreateur()->getNomComplet() ?></td>
+                </tr>
+                <tr>
+                    <th>Débutée le</th>
+                    <td><?php echo $ligue->getDateDebut() ?></td>
+                </tr>
+            </table>
         </div>
-        <table class="table">
-            <tr>
-                <th>Email</th>
-                <td><?php echo $utilisateur->getEmail() ?></td>
-            </tr>
-            <tr>
-                <th>Rôle</th>
-                <td><?php echo $utilisateur::getStaticRoleList()[$utilisateur->getRole()] ?></td>
-            </tr>
-        </table>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-users fa-fw"></i>&nbsp;
+                    Joueurs
+                </h3>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Score</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($ligue->getJoueurs() as $joueur) : ?>
+                    <tr>
+                        <td>
+                            <?php echo $joueur->getNomComplet() ?>
+                        </td>
+                        <td>
+                            0 (TODO SCORE)
+                        </td>
+                    </tr>
+                <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-gamepad fa-fw"></i>&nbsp;
+                    Games
+                </h3>
+            </div>
+            <table class="table">
+                <tbody>
+                <?php foreach ($yesterdaysGames as $game) : ?>
+                    <tr class="active">
+                        <td><?php echo $game->getDate()->format('d/m/Y') ?></td>
+                        <td class="text-right"><?php echo $game->getEquipeAway()->getLongName() ?></td>
+                        <td class="text-center"><?php echo $game->getScoreAway() ?> - <?php echo $game->getScoreHome() ?></td>
+                        <td><?php echo $game->getEquipeHome()->getLongName() ?></td>
+                    </tr>
+                <?php endforeach ?>
+                <?php foreach ($tonightsGames as $game) : ?>
+                    <tr>
+                        <td><?php echo $game->getDate()->format('d/m/Y') ?></td>
+                        <td class="text-right"><?php echo $game->getEquipeAway()->getLongName() ?></td>
+                        <td class="text-center">@</td>
+                        <td><?php echo $game->getEquipeHome()->getLongName() ?></td>
+                    </tr>
+                <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
